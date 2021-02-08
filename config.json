@@ -1,0 +1,7 @@
+{
+  "logoWidthMagnification": 0.25,
+  "logoMarginMagnification": 0.0125,
+  "logoAlphaValue": 0.6,
+  "useTmpDir": true,
+  "logoImgPath": "./src/logo.png"
+}

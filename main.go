@@ -18,19 +18,36 @@ import (
 	"github.com/nfnt/resize"
 )
 
+var configFile = "config.json"
 var profilesFile = "profiles.json"
-var useTmpDir = true
 var tmpDirPath = "./tmp/"
-var logoImgPath = "./src/logo.png"
-var logoWidthMagnification = 0.25
-var logoMarginMagnification = 0.0125
-var logoAlphaValue = 0.6
+
+type Config struct {
+	LogoWidthMagnification  float64 `json:"logoWidthMagnification"`
+	LogoMarginMagnification float64 `json:"logoMarginMagnification"`
+	LogoAlphaValue          float64 `json:"logoAlphaValue"`
+	UseTmpDir               bool    `json:"useTmpDir"`
+	LogoImgPath             string  `json:"logoImgPath"`
+}
 
 type Profile struct {
 	Size   int    `json:"size"`
 	Format string `json:"format"`
 	Prefix string `json:"prefix"`
 	Suffix string `json:"suffix"`
+}
+
+func loadConfig() (*Config, error) {
+	f, err := os.Open(configFile)
+	if err != nil {
+		fmt.Println("load config:", err)
+		return nil, err
+	}
+	defer f.Close()
+
+	var cfg Config
+	err = json.NewDecoder(f).Decode(&cfg)
+	return &cfg, err
 }
 
 func outFileName(baseName string, profile Profile, useTmpDir bool) string {
@@ -92,6 +109,13 @@ func opacity(img image.Image, alpha float64) image.Image {
 }
 
 func main() {
+	config, err := loadConfig()
+	logoWidthMagnification := config.LogoWidthMagnification
+	logoMarginMagnification := config.LogoMarginMagnification
+	logoAlphaValue := config.LogoAlphaValue
+	useTmpDir := config.UseTmpDir
+	logoImgPath := config.LogoImgPath
+
 	flag.Parse()
 	args := flag.Args()
 	if flag.NArg() < 1 {
