@@ -1,0 +1,15 @@
+{
+  "imgWidth": 1200,
+  "imgHeight": 628,
+  "logoWidthMagnification": 0.4,
+  "elementWidthMagnification": 0.2,
+  "elementMarginMagnification": 0.03,
+  "fontSize": 48,
+  "bgAlphaValue": 0.55,
+  "outFormat": "jpg",
+  "bgImgPath": "cover_tech2020.jpg",
+  "logoImgPath": "logo.png",
+  "fontBinPath": "Koruri-Bold.ttf",
+  "srcDir": "./src",
+  "destDir": "./dest"
+}
